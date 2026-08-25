@@ -1,0 +1,46 @@
+name: Sync to Hugging Face space
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  sync-to-hub:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 1
+      - name: Push to hub
+        env:
+          HF_TOKEN: ${{ secrets.HF_TOKEN }}
+        run: |
+          # Remove Git history so we don't push old binary files
+          rm -rf .git
+          
+          # Remove unnecessary folders from Hugging Face
+          rm -rf frontend/
+          rm -rf backend/
+          
+          # Create Hugging Face specific README.md with YAML configuration safely
+          echo "---" > README.md
+          echo "title: EvidentAI GraphRAG" >> README.md
+          echo -e "emoji: \U0001F9E0" >> README.md
+          echo "colorFrom: blue" >> README.md
+          echo "colorTo: purple" >> README.md
+          echo "sdk: docker" >> README.md
+          echo "pinned: false" >> README.md
+          echo "---" >> README.md
+          cat readme.md >> README.md
+          rm readme.md
+          
+          # Initialize a fresh git repo
+          git init
+          git config user.name "GitHub Actions"
+          git config user.email "actions@github.com"
+          git branch -m main
+          git add .
+          git commit -m "Sync backend to Hugging Face Space"
+          
+          # Force push to overwrite the Hugging Face Space completely
+          git push --force https://Aditya83490:$HF_TOKEN@huggingface.co/spaces/Aditya83490/documind-api main

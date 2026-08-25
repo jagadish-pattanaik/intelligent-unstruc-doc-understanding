@@ -1,0 +1,77 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: #11100E;
+  color: #F4EBDD;
+  font-family: 'Inter', sans-serif;
+  overflow-x: hidden;
+  margin: 0;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Custom scrollbar for a sleek vibe */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.2);
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(111, 106, 96, 0.45);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(214, 154, 45, 0.65);
+}
+
+/* Beautiful text selection highlight */
+::selection {
+  background: rgba(214, 154, 45, 0.99);
+  color: #16130E;
+}
+
+/* Electric Border Animation */
+@property --electric-angle {
+  syntax: '<angle>';
+  initial-value: 0deg;
+  inherits: false;
+}
+
+@keyframes electric-spin {
+  0% { --electric-angle: 0deg; }
+  100% { --electric-angle: 360deg; }
+}
+
+.electric-border {
+  position: relative;
+  /* Use z-index to create a stacking context so ::before is below the content */
+  z-index: 1;
+}
+
+.electric-border::before {
+  content: '';
+  position: absolute;
+  inset: -2px; /* Border thickness */
+  border-radius: inherit;
+  padding: 2px; /* Must match inset to keep the inner transparent box exact */
+  background: conic-gradient(from var(--electric-angle, 0deg), transparent 70%, #D69A2D, #8F5C12);
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  animation: electric-spin 2s linear infinite;
+  pointer-events: none;
+  z-index: -1;
+}
+html.light-theme {
+  background: #F7F3EA;
+}

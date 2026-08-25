@@ -1,0 +1,21 @@
+name: Keep Supabase Active
+
+on:
+  schedule:
+    # Runs every 3 days at midnight UTC — prevents Supabase free-tier auto-pause (7 day limit)
+    - cron: '0 0 */3 * *'
+  workflow_dispatch: # allows manual trigger from GitHub Actions tab
+
+jobs:
+  ping-supabase:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Ping Supabase health endpoint
+        run: |
+          STATUS=$(curl -s -o /dev/null -w "%{http_code}" https://doqzbeqzxfjnzzekykoz.supabase.co/health)
+          echo "Supabase health status: $STATUS"
+          if [ "$STATUS" != "200" ]; then
+            echo "WARNING: Supabase returned status $STATUS — project may be paused!"
+          else
+            echo "OK: Supabase is alive."
+          fi

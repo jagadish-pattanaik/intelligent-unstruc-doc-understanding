@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description"
+    content="EvidentAI — Intelligent Unstructured Document Understanding. Upload PDFs, scans, and images to build a semantic knowledge graph you can query in natural language." />
+  <title>EvidentAI — Intelligent Document Understanding</title>
+  <!-- Inter Font with full weight range -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  
+  <!-- Roboto Flex for Variable Proximity -->
+  <link href="https://fonts.googleapis.com/css2?family=Roboto+Flex:opsz,wdth,wght@8..144,25..151,100..1000&display=swap" rel="stylesheet">
+
+  <!-- THE NUKE: Tailwind CDN (Bypasses all terminal errors) -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: { sans: ['Inter', 'sans-serif'] },
+          colors: {
+            storm: {
+              900: '#384959',
+              500: '#6A89A7',
+              300: '#88BDF2',
+              100: '#BDDDFC',
+            }
+          }
+        }
+      }
+    }
+  </script>
+</head>
+
+<body class="bg-[#0f1923] text-storm-100 font-sans m-0 overflow-x-hidden">
+  <div id="root"></div>
+  <script type="module" src="/src/main.jsx"></script>
+</body>
+
+</html>
